@@ -1,0 +1,18 @@
+name: test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, macos-15-intel, ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: Homebrew/actions/setup-homebrew@master
+      - run: brew install Dem1241/tap/slotwatch Dem1241/tap/connectwatch
+      - run: brew test Dem1241/tap/slotwatch Dem1241/tap/connectwatch
